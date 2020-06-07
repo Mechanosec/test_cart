@@ -13,3 +13,19 @@
     )
 
 
+### Развертывание
+    composer install
+    
+    cp .env.example .env
+    
+    # настроить в файле .env подключение к локальной базе данных
+    
+    php artisan key:generate
+    php artisan jwt:secret    
+    
+    npm install
+    npm run dev # для разработки
+    npm run build # для остального
+
+    php artisan migrate --seed # для инициализации БД
+    php artisan migrate # если нужны только обновть БД
