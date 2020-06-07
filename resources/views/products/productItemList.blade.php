@@ -5,9 +5,8 @@
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->price }} ₽</p>
             <p></p>
-                <button type="submit" class="btn btn-primary" role="button" wfd-id="82">В корзину</button>
+                <button type="submit" class="btn btn-primary addToCart" data-productId="{{ $product->id }}" role="button" wfd-id="82">В корзину</button>
                 <a href="{{ route('product', ['id' => $product->id]) }}" class="btn btn-default" role="button">Подробнее</a>
-                <input type="hidden" name="_token" value="3n6uIPXYP5Met5eCxHtyq8dAsnzXqoTOfIPCkCFN" wfd-id="71">
             <p></p>
         </div>
     </div>

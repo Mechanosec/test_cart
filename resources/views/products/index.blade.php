@@ -7,10 +7,10 @@
                 Кнопка выпадающего списка
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{ route('sorting', ['sorting' => 'name', 'type' => 'asc']) }}">Название а-я</a>
-                <a class="dropdown-item" href="{{ route('sorting', ['sorting' => 'name', 'type' => 'desc']) }}">Название я-а</a>
-                <a class="dropdown-item" href="{{ route('sorting', ['sorting' => 'price', 'type' => 'asc']) }}">Цена по возрастанию</a>
-                <a class="dropdown-item" href="{{ route('sorting', ['sorting' => 'price', 'type' => 'desc']) }}">Цена по убыванию</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'asc']) }}">Название а-я</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'desc']) }}">Название я-а</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'asc']) }}">Цена по возрастанию</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'desc']) }}">Цена по убыванию</a>
             </div>
         </div>
     </div>
@@ -30,7 +30,24 @@
 @section('otherJs')
     <script>
         $(function () {
-
+            $('.addToCart').click(function (e) {
+                if(!$(this).hasClass('inCart')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/cart/toggle/' + $(this).attr('data-productId'),
+                        data: {'productId': $(this).attr('data-productId')},
+                        success: function (response) {
+                            console.log(123);
+                        },
+                        dataType: 'json'
+                    });
+                    $(this).html('Удалить из корзины');
+                    $(this).addClass('inCart');
+                } else {
+                    $(this).html('В корзину');
+                    $(this).removeClass('inCart');
+                }
+            });
         });
     </script>
 @endsection
