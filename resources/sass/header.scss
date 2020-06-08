@@ -47,6 +47,7 @@ header nav {
 }
 
 header nav a {
+    display: flex;
     padding: 0 0.6em;
     white-space: nowrap;
     color: inherit;
