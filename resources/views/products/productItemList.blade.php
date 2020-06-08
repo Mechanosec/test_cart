@@ -5,7 +5,9 @@
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->price }} ₽</p>
             <p></p>
-                <button type="submit" class="btn btn-primary addToCart" data-productId="{{ $product->id }}" role="button">В корзину</button>
+                <button type="submit" class="btn btn-primary addToCart" data-productId="{{ $product->id }}" role="button">
+                    {{ \App\Service\Cart::checkInCart($product->id) ? 'Удалить из корзины' : 'В корзину' }}
+                </button>
                 <a href="{{ route('product', ['id' => $product->id]) }}" class="btn btn-default" role="button">Подробнее</a>
             <p></p>
         </div>

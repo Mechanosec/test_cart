@@ -3,14 +3,19 @@
 @section('content')
     <div id="sortable">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Сортировка
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'asc']) }}">Название а-я</a>
-                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'desc']) }}">Название я-а</a>
-                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'asc']) }}">Цена по возрастанию</a>
-                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'desc']) }}">Цена по убыванию</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'asc']) }}">Название
+                    а-я</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'name', 'type' => 'desc']) }}">Название
+                    я-а</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'asc']) }}">Цена по
+                    возрастанию</a>
+                <a class="dropdown-item" href="{{ route('products', ['sorting' => 'price', 'type' => 'desc']) }}">Цена
+                    по убыванию</a>
             </div>
         </div>
     </div>
@@ -30,22 +35,37 @@
 @section('otherJs')
     <script>
         $(function () {
+
+            function toggleCart(productId, successFunction) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/toggle/' + productId,
+                    success: (data) => {
+                        if (data.res) {
+                            successFunction()
+                        }
+                    }
+                });
+            }
+
             $('.addToCart').click(function (e) {
-                if(!$(this).hasClass('inCart')) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/cart/toggle/' + $(this).attr('data-productId'),
-                        data: {'productId': $(this).attr('data-productId')},
-                        success: function (response) {
-                            console.log(123);
-                        },
-                        dataType: 'json'
-                    });
-                    $(this).html('Удалить из корзины');
-                    $(this).addClass('inCart');
+                let productId = $(this).attr('data-productId')
+                if (!$(this).hasClass('inCart')) {
+                    toggleCart(productId,
+                        () => {
+                            $(this).html('Удалить из корзины');
+                            $(this).addClass('inCart');
+                        }
+                    )
+                    $('#cart_counter').html(parseInt($('#cart_counter').html()) + 1);
                 } else {
-                    $(this).html('В корзину');
-                    $(this).removeClass('inCart');
+                    toggleCart(productId,
+                        () => {
+                            $(this).html('В корзину');
+                            $(this).removeClass('inCart');
+                        }
+                    )
+                    $('#cart_counter').html(parseInt($('#cart_counter').html()) - 1);
                 }
             });
         });

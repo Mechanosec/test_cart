@@ -29,6 +29,6 @@ class Product extends Model
             $typeSorting = $request->get('type') ? $request->get('type') : 'ASC';
             $query->orderBy($sorting, $typeSorting);
         }
-        return $query;
+        return $query->orderBy('availability');
     }
 }
