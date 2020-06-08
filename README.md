@@ -21,11 +21,8 @@
     # настроить в файле .env подключение к локальной базе данных
     
     php artisan key:generate
-    php artisan jwt:secret    
     
     npm install
-    npm run dev # для разработки
-    npm run build # для остального
+    npm run dev # для сборки стилей и js
 
-    php artisan migrate --seed # для инициализации БД
-    php artisan migrate # если нужны только обновть БД
+    php artisan migrate # для заполнения базы товарами
