@@ -25,5 +25,6 @@
     });
 </script>
 @yield('otherJs')
+@include('layouts.footer')
 </body>
 </html>
