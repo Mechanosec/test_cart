@@ -13,7 +13,7 @@ class CartService
      * @return bool[]
      * @throws \Exception
      */
-    public static function toggle(int $productId = 0)
+    public function toggle(int $productId = 0)
     {
         if ($product = Product::findBy('id', $productId)) {
             $productIds = session('products', []);
