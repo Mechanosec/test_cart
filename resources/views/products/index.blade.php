@@ -23,7 +23,7 @@
         <h1>Все товары</h1>
         <div class="row">
             @foreach($products as $product)
-                @include('products.productItemList', ['product' => $product])
+                @include('products.productItemList', ['product' => collect($product)])
             @endforeach
         </div>
     </div>

@@ -4,10 +4,21 @@
 namespace App\Http\Controllers;
 
 
-use App\Service\Cart;
+use App\Service\CartService;
+use Illuminate\Support\Facades\App;
 
 class CartController extends Controller
 {
+    /**
+     * @var CartService
+     */
+    protected $cartService;
+
+    public function __construct()
+    {
+        $this->cartService = App::make(CartService::class);
+    }
+
     /**
      * @param int $productId
      * @return bool[]
@@ -15,6 +26,6 @@ class CartController extends Controller
      */
     public function toggle(int $productId=0)
     {
-        return Cart::toggle($productId);
+        return $this->cartService->toggle($productId);
     }
 }

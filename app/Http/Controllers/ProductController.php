@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\ProductListRequest;
+use App\Http\Resources\Product as ProductResource;
 use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -20,7 +21,7 @@ class ProductController
     public function viewIndex(ProductListRequest $request)
     {
         $products = Product::getList($request);
-        return view('products.index', ['products' => $products]);
+        return view('products.index', ['products' => ProductResource::collection($products)]);
     }
 
     /**
@@ -30,6 +31,6 @@ class ProductController
     public function viewProduct(int $id=0)
     {
         $product = Product::findBy('id', $id);
-        return view('products.product', ['product' => $product]);
+        return view('products.product', ['product' => collect(new ProductResource($product))]);
     }
 }

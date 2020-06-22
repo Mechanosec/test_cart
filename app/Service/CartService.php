@@ -6,7 +6,7 @@ namespace App\Service;
 
 use App\Models\Product;
 
-class Cart
+class CartService
 {
     /**
      * @param int $productId
@@ -17,7 +17,7 @@ class Cart
     {
         if ($product = Product::findBy('id', $productId)) {
             $productIds = session('products', []);
-            if (self::checkInCart($product->id)) {
+            if ($product->checkInCart()) {
                 unset($productIds[array_search($product->id, $productIds)]);
             } else {
                 $productIds[] = $product->id;
@@ -26,15 +26,5 @@ class Cart
             return ['res' => true];
         }
         return ['res' => false];
-    }
-
-    public static function checkInCart(int $productId = 0)
-    {
-        return in_array($productId, session('products', []));
-    }
-
-    public static function countInCart()
-    {
-        return count(session('products', []));
     }
 }

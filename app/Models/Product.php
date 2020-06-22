@@ -31,4 +31,12 @@ class Product extends Model
         }
         return $query->orderBy('availability', 'desc');
     }
+
+    /**
+     * @return bool
+     */
+    public function checkInCart()
+    {
+        return in_array($this->id, session('products', []));
+    }
 }
